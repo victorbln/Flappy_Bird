@@ -1,3 +1,5 @@
+#ifndef _TIMER
+#define _TIMER
 #include <iostream>
 #include <chrono>
 
@@ -16,3 +18,5 @@ private:
     typedef std::chrono::duration<double, std::ratio<1> > second_;
     std::chrono::time_point<clock_> beg_;
 };
+
+#endif

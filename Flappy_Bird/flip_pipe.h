@@ -1,14 +1,16 @@
 #pragma once
 class flip_pipe
 {
-	//char m_pipe[2][8];
-	int n;
-	int x;
+
+	int m_head;
+	int m_x;
 public:
-	flip_pipe();
+	flip_pipe(int down_pipe_head_value = 0);
 	~flip_pipe();
-	bool flip_pipe_move();
-	void create(int a);
-	void set_n(int a);
+	int m_get_head();
+	int m_get_x();
+	bool m_move_flip_pipe();
+
+
 };
 

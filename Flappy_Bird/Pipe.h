@@ -1,13 +1,14 @@
 #pragma once
 class Pipe
 {
-	int n;
-	int x;
+	int m_head;//pozition of the head of the pipe on Y axis...generated random(see the constructor)
+	int m_x;//position of the pipe on X axis...corresponding to the left side of it
 public:
-	Pipe();
-	~Pipe();
-	int get_n();
-	bool move_pipe();
+	Pipe();//constructor
+	~Pipe();//destructor
+	int m_get_head();//will return 
+	int m_get_x();
+	bool m_move_down_pipe();
 };
 
 ///

@@ -6,22 +6,28 @@ Pipe::Pipe()
 {
 	int ok = 0;
 	int k = 0;
-	n = 0;
-	//srand(time(NULL));
-	while (n < 11) {
+	m_head = 0;
 
-	n = rand() % 17;
-	}
-	//n = 17;
-	for (int i = n; i <=19; i++)
+	//generating a random value for the head of the pipe
+	//its value needs to be greater than 12 because we need to create another pipe 
+	//on the up side and we also have a gap between them
+	while (m_head < 11) 
 	{
-		for (int j = 60; j <= 67; j++) {
-			if (ok != 1) {
-				SetColor(10);
+		m_head = rand() % 17;
+	}
+	
+	SetColor(10);//setting the console text to green
+	//display the pipe on the console
+	for (int i = m_head; i <=19; i++)
+	{
+		for (int j = 60; j <= 67; j++) 
+		{
+			if (ok != 1) 
+			{
 				coordonate(j-1, i); std::cout << pipe[0][k];
 			}
-			else {
-				SetColor(10);
+			else 
+			{
 				coordonate(j, i); std::cout << pipe[1][k];
 			}
 			k++;
@@ -29,24 +35,28 @@ Pipe::Pipe()
 		k = 0;
 		ok=1;
 	}
-	SetColor(15);
-	x = 60;
+
+	m_x = 60;//default position for the m_x member is 60 because there is the pipe created on the screen
 }
-bool Pipe::move_pipe() {
-	x -= 1;
+bool Pipe::m_move_down_pipe() {
+	m_x -= 1;//decrement the m_x member is a move to left for the pipe
 
 	SetColor(10);
-	if (x > 2) {
+	if (m_x > 2) {
 		int ok = 0;
 		int j;
 		int k = 0;
-		for (int i = n; i <= 19; i++)
+		for (int i = m_head; i <= 19; i++)
 		{
-			for (j = x; j <= x + 7; j++) {
-				if (ok != 1) {
+			for (j = m_x; j <= m_x + 7; j++) {
+				if (ok != 1) 
+				{
+					//at first iteration we are creating the head of the pipe (pipe[0][k])
 					coordonate(j - 1, i); std::cout << pipe[0][k];
 				}
-				else {
+				else 
+				{
+					//for the rest of them we are creating the body of it (pipe[1][k])
 					coordonate(j, i); std::cout << pipe[1][k];
 				}
 				k++;
@@ -55,13 +65,11 @@ bool Pipe::move_pipe() {
 			k = 0;
 			ok = 1;
 		}
-		return false;
+		return false;//return false if the pipe is not at the edge of thw window
 	}
-	else
+	else//if the m_x = 2 that means that the pipe is at the left edge of the window so we erase it from the screen 
 	{
-		SetColor(15);
-		//int j=2;
-		for (int i = n; i <= 19; i++)
+		for (int i = m_head; i <= 19; i++)
 		{
 			for (int j=2 ; j <= 10; j++) 
 			{
@@ -76,7 +84,12 @@ Pipe::~Pipe()
 {
 }
 
-int Pipe::get_n()
+int Pipe::m_get_head()
 {
-	return n;
+	return m_head;
+}
+
+int Pipe::m_get_x()
+{
+	return m_x;
 }

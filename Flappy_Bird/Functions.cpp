@@ -56,11 +56,14 @@ void Flappy_Bird()
         coordonate(0, 18); std::cout << "|                                                                    |";
         coordonate(0, 19); std::cout << "|                                                                    |";
         coordonate(0, 20); std::cout << "----------------------------------------------------------------------";
+        coordonate(0, 21); std::cout << "                                                                      ";
+        coordonate(0, 22); std::cout << "                                                                      ";
         SetColor(15);
         coordonate(31, 12); std::cout << "1 Start ";
         coordonate(32, 13); std::cout << "2 Exit";
         coordonate(32, 14); std::cout << "3 Scor";
         coordonate(28, 15); std::cout << "Alege o optiune: ";
+    
         if (!(std::cin >> optiune)) {
             SetColor(4);
             coordonate(27, 15); std::cout << "Optiune invalida";
@@ -75,7 +78,9 @@ void Flappy_Bird()
             Play();
             //delete[]bird;
             break;
-        case 2:exit(0);
+        case 2:
+            coordonate(0,30);
+            exit(0);
         //case 3:
             //scor();
         default:
@@ -92,8 +97,6 @@ void Flappy_Bird()
 }
 void ShowConsoleCursor(bool showFlag)
 {
-    
-
     CONSOLE_CURSOR_INFO     cursorInfo;
 
     GetConsoleCursorInfo(hConsole, &cursorInfo);
@@ -103,9 +106,9 @@ void ShowConsoleCursor(bool showFlag)
 void chenar() {
     ShowConsoleCursor(false);
     SetColor(3);
-    for (int i = 0; i < 70; i++) 
+    for (int i = 0; i < 70; i++)
     {
-    coordonate(i, 3);  std::cout << "\xDC";
+        coordonate(i, 3);  std::cout << "\xDC";
     }
     coordonate(0, 4);  std::cout << "\xDB                                                                    \xDB";
     coordonate(0, 5);  std::cout << "\xDB                                                                    \xDB";
@@ -123,91 +126,133 @@ void chenar() {
     coordonate(0, 17); std::cout << "\xDB                                                                    \xDB";
     coordonate(0, 18); std::cout << "\xDB                                                                    \xDB";
     coordonate(0, 19); std::cout << "\xDB                                                                    \xDB";
-    for (int i = 0; i < 70; i++) 
+    for (int i = 0; i < 70; i++)
     {
         if (i == 0 || i == 69) {
 
-    coordonate(i, 20); std::cout << "\xDB";
+            coordonate(i, 20); std::cout << "\xDB";
         }
         else {
             coordonate(i, 20); std::cout << "\xDC";
         }
     }
 }
+    
 void Play() 
 {
-    chenar();
-    down_pipes.insert(down_pipes.begin(), Pipe());
-        //.emplace_back(Pipe());
-    up_pipes.insert(up_pipes.begin(), flip_pipe());
-        //.emplace_back(flip_pipe());
-    up_pipes[0].create(down_pipes[0].get_n());
+    chenar();//creation of endges for the window of the game in console
 
+    //initial creation of 2 pipes for the beginning of the game
+    pipes = 0;
+    down_pipes[pipes] = new Pipe();
+    up_pipes[pipes] = new flip_pipe(down_pipes[pipes]->m_get_head());
+    //flip_pipes[pipes]->create(down_pipes_ptr[0]->get_n());
+
+    //initial creation of the bird for the beginning of the game
     Bird* bird = new Bird();
-    SetColor(15);
     
-    int ok = 0;
+
+    //creating 2 timer objects to count the time elapsed
     Timer bird_time;
     Timer pipe_time;
     coordonate(20, 21); std::cout << "Press any key to start";
+    while(!_kbhit())//
+    {
+         coordonate(20, 21); std::cout << "Press any key to start";
+    }
+    coordonate(0, 21); std::cout << "                                                                    ";
     while (1) 
     {
-        while(!_kbhit()&&!ok)
+
+        if (pipe_time.elapsed()>var_time)//verify the time elapsed from the last move of pipes
         {
-            coordonate(20, 21); std::cout << "Press any key to start";
-        }
-        coordonate(0, 21); std::cout << "                                                                    ";
-        ok = 1;
-        if (pipe_time.elapsed()>var_time)
-        {
-            for (int i =0; i <=pipes; i++)// (int i = 0; i < pipes + 1; i++)
+            for (int i =0; i <=pipes; i++)
             {
-                
-                if (down_pipes[i].move_pipe()) 
+                if (down_pipes[i]->m_move_down_pipe())//calling the m_move_down_pipe method for the down pipes
                 {
-                    //pipe_it = down_pipes.back();
-                    //down_pipes.erase(pipe_it);
-                    down_pipes.pop_back();
+                    //if the pipe is at the left edge of the window the m_move_down_pipe 
+                    //will delete the visual pipe but now we delete the objects from memmory
+                    delete down_pipes[i];
+
+                    //shifting left the array of down side pipes
+                    for (int i = 0; i <= pipes; i++)
+                    {
+                        down_pipes[i] = down_pipes[i + 1];
+                    }
+
+                    
                 }
-                if (up_pipes[i].flip_pipe_move())
+                if (up_pipes[i]->m_move_flip_pipe())//calling the m_move_flip_pipe method for the up side pipes
                 {
-                    up_pipes.pop_back();
-                    //flip_pipe_it = up_pipes.end();
-                    //up_pipes.erase(flip_pipe_it);
+                    //will delete the visual pipe but now we delete the objects from memmory
+                    //if the pipe is at the left edge of the window the m_move_flip_pipe 
+                    delete up_pipes[i];//erasing the object from memmory
+
+                    //shifting left the array of up side pipes
+                    for (int i = 0; i <= pipes; i++)
+                    {
+                        up_pipes[i] = up_pipes[i + 1];
+                    }
+                    pipes--;//decrement the pipes count variable
+                    i--;
                 }
-                
+               
             }
-            move_count++;
-            pipe_time.reset();
+            move_count++;//counting the moves of the pipes on the screen
+            pipe_time.reset();//reset the pipe time because we moved them
         }
-        if (move_count == 14) 
+        if (move_count == 20)//if the pipes moved 16 spaces we create other pipes at the right side of the window 
         {
             move_count=0;
             pipes++;
-            down_pipes.emplace_back(Pipe());
-            up_pipes.emplace_back(flip_pipe());
-            up_pipes[pipes].create(down_pipes[pipes].get_n());
+
+            //creating new pipes at the right side of the window and adding the objects to the arrays
+            down_pipes[pipes] = new Pipe();
+            up_pipes[pipes] = new flip_pipe(down_pipes[pipes]->m_get_head());
+
             
         }
-        //bird->game_over()
         if (_kbhit()) 
         {
+            
              bird->move_bird(_getch());
-             bird->update_pos();
              bird_time.reset();
+        }
+        if (bird->game_over(down_pipes, up_pipes))
+        {
+            //if the bird hit the pipes
+            SetColor(4);
+            coordonate(29, 21); std::cout << "GAME OVER";
+            coordonate(25, 22); system("PAUSE");
+            for (int i = 0; i < pipes; i++)
+            {
+                delete down_pipes[i];
+                delete up_pipes[i];
+                down_pipes[i] = nullptr;
+                up_pipes[i] = nullptr;
+            }
+            break;
         }
         if (bird_time.elapsed() > var_time)
         {
-             if (bird->fall()) 
+             if (bird->fall())//if the time for the bird elapsed it will fall 1 space
              {
-                 chenar();
+                 //if the bird hit the ground we enter in this block of code
                  SetColor(4);
-                 coordonate(29, 10); std::cout << "GAME OVER";
-                 coordonate(25, 11); system("PAUSE");
+                 coordonate(29, 21); std::cout << "GAME OVER";
+                 coordonate(25, 22); system("PAUSE");
+                 for (int i = 0; i < pipes; i++)
+                 {
+                     delete down_pipes[i];
+                     delete up_pipes[i];
+                     down_pipes[i] = nullptr;
+                     up_pipes[i] = nullptr;
+                 }
                  break;
              }
              else 
              {
+                 //if the bird didn't fell we enter in this block which just resets the timer for it
                  bird_time.reset();
              }
         }
@@ -216,6 +261,8 @@ void Play()
     }
                
 }
+
+
 
             
 

@@ -132,6 +132,7 @@
     <ClCompile Include="Functions.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Pipe.cpp" />
+    <ClCompile Include="User.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bird.h" />
@@ -140,6 +141,7 @@
     <ClInclude Include="Data.h" />
     <ClInclude Include="Pipe.h" />
     <ClInclude Include="Timer.h" />
+    <ClInclude Include="User.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

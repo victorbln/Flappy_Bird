@@ -20,14 +20,14 @@ Pipe::Pipe()
 	//display the pipe on the console
 	for (int i = m_head; i <=19; i++)
 	{
-		for (int j = 60; j <= 67; j++) 
+		for (int j = 68; j <= 75; j++) 
 		{
 			if (ok != 1) 
-			{
+			{	//at first iteration we are creating the head of the pipe (pipe[0][k])
 				coordonate(j-1, i); std::cout << pipe[0][k];
 			}
 			else 
-			{
+			{	//for the rest of them we are creating the body of it (pipe[1][k])
 				coordonate(j, i); std::cout << pipe[1][k];
 			}
 			k++;
@@ -36,7 +36,7 @@ Pipe::Pipe()
 		ok=1;
 	}
 
-	m_x = 60;//default position for the m_x member is 60 because there is the pipe created on the screen
+	m_x = 68;//default position for the m_x member is 60 because there is the pipe created on the screen
 }
 bool Pipe::m_move_down_pipe() {
 	m_x -= 1;//decrement the m_x member is a move to left for the pipe
@@ -53,6 +53,7 @@ bool Pipe::m_move_down_pipe() {
 				{
 					//at first iteration we are creating the head of the pipe (pipe[0][k])
 					coordonate(j - 1, i); std::cout << pipe[0][k];
+					std::cout << " ";
 				}
 				else 
 				{
@@ -61,7 +62,6 @@ bool Pipe::m_move_down_pipe() {
 				}
 				k++;
 			}
-			coordonate(j + 1, i); std::cout << " ";
 			k = 0;
 			ok = 1;
 		}
@@ -71,10 +71,7 @@ bool Pipe::m_move_down_pipe() {
 	{
 		for (int i = m_head; i <= 19; i++)
 		{
-			for (int j=2 ; j <= 10; j++) 
-			{
-				coordonate(j, i); std::cout << " ";
-			}
+			coordonate(2, i); std::cout << "       ";
 		}
 		return true;
 	}

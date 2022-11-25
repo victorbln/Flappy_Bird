@@ -14,12 +14,13 @@ flip_pipe::flip_pipe(int down_pipe_head_value)//we need the down_pipe_head_value
 	//display the pipe on the console
 	for (int i =m_head; i >= 4; i--)
 	{
-		for (int j = 60; j <= 67; j++) {
-			if (ok != 1) {
+		for (int j = 68; j <= 75; j++) {
+			if (ok != 1) 
+			{	//at first iteration we are creating the head of the pipe (pipe[0][k])
 				coordonate(j-1, i); std::cout << pipe[0][k];
 			}
-			else {
-
+			else 
+			{	//for the rest of them we are creating the body of it (pipe[1][k])
 				coordonate(j, i); std::cout << pipe[1][k];
 			}
 			k++;
@@ -27,7 +28,7 @@ flip_pipe::flip_pipe(int down_pipe_head_value)//we need the down_pipe_head_value
 		k = 0;
 		ok = 1;
 	}
-	m_x = 60;//default position for the m_x member is 60 because there is the pipe created on the screen
+	m_x = 68;//default position for the m_x member is 60 because there is the pipe created on the screen
 
 }
 bool flip_pipe::m_move_flip_pipe()
@@ -47,6 +48,7 @@ bool flip_pipe::m_move_flip_pipe()
 				{	
 					//at first iteration we are creating the head of the pipe (pipe[0][k])
 					coordonate(j - 1, i); std::cout << pipe[0][k];
+					std::cout << " ";
 				}
 				else 
 				{
@@ -55,7 +57,6 @@ bool flip_pipe::m_move_flip_pipe()
 				}
 				k++;
 			}
-			coordonate(j + 1, i); std::cout << " ";
 			k = 0;
 			ok = 1;
 		}
@@ -65,10 +66,7 @@ bool flip_pipe::m_move_flip_pipe()
 	{	//if the m_x = 2 that means that the pipe is at the left edge of the window so we erase it from the screen 
 		for (int i = m_head; i >=4; i--)
 		{
-			for (int j=2; j <= 10; j++) 
-			{
-				coordonate(j, i); std::cout << "  ";
-			}
+			coordonate(2, i); std::cout << "       ";
 		}
 		return true;//return true if the pipe is at the edge of the window
 	}

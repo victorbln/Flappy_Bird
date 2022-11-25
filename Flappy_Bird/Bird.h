@@ -5,13 +5,13 @@
 class Bird
 {
 	//char m_bird[2][7];//body of the bird
-	int m_y1;
-	int m_y2;
+	int m_x;
+	int m_y;
 public:
 
 	Bird();
 	~Bird();
-	int move_bird(char ch);
+	void move_bird(char ch);
 	bool game_over(Pipe* down_pipe[], flip_pipe* up_pipe[]);
 	bool fall();
 

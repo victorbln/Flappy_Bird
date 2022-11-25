@@ -17,89 +17,89 @@ Bird::Bird()
 			std::cout << bird[i][j];
 		}
 	}
-	m_y1 = 10;
-	m_y2 = 10;
+	m_x = 10;
+	m_y = 10;
 	SetColor(15);
 }
 
 
-int Bird::move_bird(char ch) 
+void Bird::move_bird(char ch) 
 {
+	ShowConsoleCursor(false);
 	SetColor(6);
-	if (ch == 32)
+
+	if (ch == 32)//32=space key
 	{
-		if (m_y2 > 4)
+		//jump only if the bird is bellow the top side of the window
+		if (m_y > 4)
 		{
-			m_y2 -= 1;
-			ShowConsoleCursor(false);
-			
+			//update position
+			m_y -= 1;
+
+			//printing the bird with the updated position
 			for (int i = 0; i < 2; i++) 
 			{
 				for (int j = 0; j < 7; j++) 
 				{
-					coordonate(m_y1 + j, m_y2 + i);
+					coordonate(m_x + j, m_y + i);
 					std::cout << bird[i][j];
 				}
 			}
-			coordonate(10, m_y2+2); std::cout << "       ";
+
+			//erasing the row bellow the bird
+			coordonate(10, m_y+2); std::cout << "       ";
 			SetColor(15);
-			return 1;
 		}
-		SetColor(15);
-		return 0;
 	}
-	else
-	{
-		SetColor(15);
-		return 1;
-	}
+
 }
 
 bool Bird::fall() 
 {
 	ShowConsoleCursor(false);
 	SetColor(6);
-	if (m_y2 < 19) 
+
+	if (m_y < 18) 
 	{
-	m_y2 += 1;
+		//updating the y position of the bird
+		m_y += 1;
+
+		//printing the bird
 		for (int i = 0; i < 2; i++) 
 		{
 			for (int j = 0; j < 7; j++) 
 			{
-				coordonate(m_y1 + j, m_y2 + i);
+				
+				coordonate(m_x + j, m_y+ i);
 				std::cout << bird[i][j];
+
 			}
 		}
-		coordonate(10, m_y2 - 1); std::cout << "       ";
+		//errasing the row above the bird
+		coordonate(10, m_y - 1); std::cout << "        ";
 		return false;
-	}
-	else 
-	{
-		return true;
 	}
 }
 
 bool Bird::game_over(Pipe* down_pipe[], flip_pipe* up_pipe[]) {
 
-	if (m_y2 == 19) //bird hit the ground
+	//collision with the pipe from bottom side
+	if (down_pipe[0]->m_get_x() + 5 >= m_x && m_y+1 >= down_pipe[0]->m_get_head())
 	{
-		return true;
-	}
-	for (int i = 0; i <= pipes; i++) 
-	{
-		if (m_y1 > up_pipe[i]->m_get_head() && m_y2 < down_pipe[i]->m_get_head()) //is bird between the heads of the pipes?
+		if (  m_x + 8 >= down_pipe[0]->m_get_x())
 		{
-			return false;
-		}
-		else
-		{
-			if (m_y1 + 7 == up_pipe[i]->m_get_x() || m_y1 + 7 == down_pipe[i]->m_get_x() || m_y2 + 5 == down_pipe[i]->m_get_x())
-			{
-				return true;
-			}
+			return true;
 		}
 	}
 
+	//collision with the pipe from top side
+	if (up_pipe[0]->m_get_x() + 5 >= m_x && m_y <= up_pipe[0]->m_get_head())
+	{
+		if (  m_x + 8 >= up_pipe[0]->m_get_x())
+		{
+			return true;
+		}
+	}	
 	return false;
 
 }

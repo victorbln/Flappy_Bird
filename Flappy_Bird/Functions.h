@@ -24,6 +24,11 @@ void SetColor(int color_code);//function that chenge the color of the text displ
 void Play();//the function which contains the game logic and functionality
 void chenar();//function which creates a blank window with edges
 void ShowConsoleCursor(bool showFlag);//function which hides the cursor in the console
+void create_user();
+void log_in();
+void instructions();
+void login_meniu();
+void save_score();
 
 
 #endif

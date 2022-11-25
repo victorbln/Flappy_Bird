@@ -2,364 +2,423 @@
 #include "Data.h"
 User::User()
 {
-	user_name_ = new char[15];
-	password_ = new char[20];
+	m_USERNAME_MIN_DIM = 6;
+	m_USERNAME_MAX_DIM = 20;
+	m_PASSWORD_MIN_DIM = 8;
+	m_PASSWORD_MAX_DIM = 24;
+}
+void User::m_set_login_string_dimensions(short username_min_dim, short username_max_dim, short password_min_dim, short password_max_dim)
+{
+	m_USERNAME_MIN_DIM = username_min_dim;
+	m_USERNAME_MAX_DIM = username_max_dim;
+	m_PASSWORD_MIN_DIM = password_min_dim;
+	m_PASSWORD_MAX_DIM = password_max_dim;
 }
 
-
-bool User::m_login_user()
+int User::m_login_user()
 {
+	bool QUIT_NAME=false;
+	bool QUIT_PASS = false;
+	bool SHOW_PASS = false;
+
+	User* u = new User();
+	char* user_name_ = new char[m_USERNAME_MAX_DIM];
+	char* password_ = new char[m_PASSWORD_MAX_DIM];
+	char* ch = new char[1];;
+
+	int STRING_DIM = 0;
 	this->m_password.clear();
 	this->m_user_name.clear();
-	User* u = new User();
-	char ch;
 	u->m_password.clear();
 	u->m_user_name.clear();
+
+	//display login screen
 	chenar();
 	ShowConsoleCursor(1);
-
-	coordonate(25, 10);
+	coordonate(32, 2); std::cout << "LOGIN MENIU";
+	coordonate(25, 12);
 	std::cout << "USERNAME: ";
-	coordonate(25, 11);
+	coordonate(25, 13);
 	std::cout << "PASSWORD: ";
-	coordonate(35, 10);
+	coordonate(3, 18);
+	std::cout << "The username must be at least "<< m_USERNAME_MIN_DIM <<" and maxim "<< m_USERNAME_MAX_DIM <<" characters";
+	coordonate(3, 19);
+	std::cout << "The password must be at least " << m_PASSWORD_MIN_DIM << " and maxim " << m_PASSWORD_MAX_DIM << " characters";
+	SetColor(2);
+	coordonate(10, 5); std::cout << "                    Press ESC to quit";
+	coordonate(10, 6); std::cout << "        You can't insert blank spaces in the password";
+	coordonate(7, 7); std::cout << "Press SPACE to show the password then press SPACE again to hide it";
+	coordonate(35, 12);
+	SetColor(15);
 
 
-	int i = 0;
-	
-	ch = (char)"";
-	ch = _getch();
-	while (ch != 13 || i<=5)
+	//read username 
+	while (!QUIT_NAME)
 	{
-		if (ch != 13)
+		*ch = _getch();
+		while (*ch != 13 || STRING_DIM < m_USERNAME_MIN_DIM)
 		{
-			if (i < 10 && ch != 8)
+			if (*ch == 27)
 			{
-				coordonate(35 + i, 10);
-				std::cout << ch;
-				this->user_name_[i] = ch;
-				i++;
+				QUIT_NAME = true;
+				break;
 			}
-			else if (i >= 10 && ch == 8)
+			if (*ch != 13)
 			{
-				i--;
-				coordonate(35 + i, 10);
-				std::cout << " ";
-				coordonate(35 + i, 10);
-			}
-			else if (ch == 8 && i <= 10 && i != 0)
-			{
-				i--;
-				coordonate(35 + i, 10);
-				std::cout << " ";
-				coordonate(35 + i, 10);
-			}
-		}
-		ch = _getch();
-	}
-	for (int j = 0; j < i; j++)
-	{
-		this->m_user_name.push_back(this->user_name_[j]);
-	}
-	coordonate(35, 11);
-	
-
-	i = 0;
-	ch = (char)"";
-	ch = _getch();
-	while (ch != 13 || i<=5 )
-	{
-		if (ch != 13)
-		{
-			if (i < 10 && ch != 8)
-			{
-				coordonate(35 + i, 11);
-				std::cout << ch;
-				this->password_[i] = ch;
-				i++;
-			}
-			else if (i >= 10 && ch == 8)
-			{
-				i--;
-				coordonate(35 + i, 11);
-				std::cout << " ";
-				coordonate(35 + i, 11);
-			}
-			else if (ch == 8 && i <= 10 && i != 0)
-			{
-				i--;
-				coordonate(35 + i, 11);
-				std::cout << " ";
-				coordonate(35 + i, 11);
-			}
-		}
-		ch = _getch();
-	}
-	for (int j = 0; j < i; j++)
-	{
-		this->m_password.push_back(this->password_[j]);
-	}
-	database.close();
-	database.open("database.bin", std::ios::binary|std::ios::in|std::ios::out);
-	if (!database)
-	{
-		database.close();
-		chenar();
-		coordonate(10, 10);
-		SetColor(4);
-		std::cout << "Error at opening database.";
-		coordonate(10, 15); system("PAUSE");
-	}
-	else
-	{
-
-
-
-		u->m_password.clear();
-		u->m_user_name.clear();
-		database.seekp(0, std::ios_base::beg);
-
-		while (1)
-		{
-			u->m_password.clear();
-			u->m_user_name.clear();
-			u->m_score=0;
-			database >> u->m_user_name;
-			database >> u->m_password;
-			database >> u->m_score;
-			for (int i = 27; i <= 41; i++)
-			{
-				coordonate(0, i); std::cout << "                                                                                                                            ";
-			}
-			if (!(u->m_user_name.compare(this->m_user_name)))
-			{
-				if (u->m_password == this->m_password)
+				if (STRING_DIM < m_USERNAME_MAX_DIM && *ch != 8)
 				{
-					this->m_score = u->m_score;
-					return true;
+					coordonate(35 + STRING_DIM, 12);
+					std::cout << *ch;
+					user_name_[STRING_DIM] = *ch;
+					STRING_DIM++;
 				}
+				else if (*ch == 8 && STRING_DIM != 0)
+				{
+					STRING_DIM--;
+					coordonate(35 + STRING_DIM, 12);
+					std::cout << " ";
+					coordonate(35 + STRING_DIM, 12);
+				}
+			}
+			*ch = _getch();
+		}
+		if (*ch == 13)
+		{
+			break;
+		}
+	}
+	if (!QUIT_NAME)
+	{
+		SHOW_PASS = false;
+		QUIT_PASS = false;
+		for (int j = 0; j < STRING_DIM; j++)
+		{
+			this->m_user_name.push_back(user_name_[j]);
+		}
+		coordonate(35, 13);
+		STRING_DIM = 0;
+		
+
+		//read password 
+		while (!QUIT_PASS)
+		{
+			*ch = _getch();
+			if (*ch == 27)
+			{
+				QUIT_PASS = true;
+				break;
+			}
+			
+			while (*ch != 13 || STRING_DIM < m_PASSWORD_MIN_DIM)
+			{
+				if (*ch == 27)
+				{
+					QUIT_PASS = true;
+					break;
+				}
+				if (*ch == 32)
+				{
+					SHOW_PASS = !SHOW_PASS;
+					coordonate(35, 13);
+					if (SHOW_PASS)
+					{
+						for (int i = 0; i < STRING_DIM; i++)
+						{
+							std::cout << password_[i];
+						}
+					}
+					else
+					{
+
+						for (int i = 0; i < STRING_DIM; i++)
+						{
+							std::cout << "*";
+						}
+					}
+				}
+				if (*ch != 13&&*ch!=32)
+				{
+					if (STRING_DIM < m_PASSWORD_MAX_DIM && *ch != 8)
+					{
+						coordonate(35 + STRING_DIM, 13);
+						if (SHOW_PASS) 
+						{
+							std::cout << *ch;
+						}
+						else
+						{
+							std::cout << "*";
+						}
+						password_[STRING_DIM] = *ch;
+						STRING_DIM++;
+					}
+					else if (*ch == 8 && STRING_DIM != 0)
+					{
+						STRING_DIM--;
+						coordonate(35 + STRING_DIM, 13);
+						std::cout << " ";
+						coordonate(35 + STRING_DIM, 13);
+					}
+				}
+				*ch = _getch();
+			}
+			if (*ch == 13)
+			{
+				break;
+			}
+		}
+		if (!QUIT_PASS)
+		{
+			for (int j = 0; j < STRING_DIM; j++)
+			{
+				this->m_password.push_back(password_[j]);
+			}
+			database.close();
+			database.open("database.bin", std::ios::binary | std::ios::in | std::ios::out);
+			if (!database)
+			{
+				database.close();
+				chenar();
+				coordonate(10, 10);
+				SetColor(4);
+				std::cout << "Error at opening database.";
+				coordonate(10, 15); system("PAUSE");
 			}
 			else
 			{
-				u->m_password.clear();
-				u->m_user_name.clear();
-			}
-			if(database.eof())
-			{
-				return false;
+				database.seekp(0, std::ios_base::beg);
+				while (1)
+				{
+					u->m_password.clear();
+					u->m_user_name.clear();
+					u->m_score = 0;
+					database >> u->m_user_name;
+					database >> u->m_password;
+					database >> u->m_score;
+
+					if (!(u->m_user_name.compare(this->m_user_name)))
+					{
+						if (u->m_password == this->m_password)
+						{
+							this->m_score = u->m_score;
+							return 0;
+						}
+					}
+					if (database.eof())
+					{
+						return 1;
+					}
+				}
 			}
 		}
+
 	}
 	database.close();
 	delete u;
-	return false;
+	delete ch;
+	delete user_name_;
+	delete password_;
+	return -1;
 }
+
+
 
 void User::m_register_user()
 {
-	char ch;
-	//char name[50];
-	//char pass[50];
+	bool QUIT_NAME = false;
+	bool QUIT_PASS = false;
+	bool SHOW_PASS = false;
+
+	char* user_name_ = new char[m_USERNAME_MAX_DIM];
+	char* password_ = new char[m_PASSWORD_MAX_DIM];
+	char *ch;
+	int STRING_DIM = 0;
 	std::string str;
 
 	chenar();
 	ShowConsoleCursor(1);
-
-	coordonate(25, 10);
+	coordonate(30, 2); std::cout << "REGISTRATION MENIU";
+	coordonate(25, 12);
 	std::cout << "USERNAME: ";
-	coordonate(25, 11);
+	coordonate(25, 13);
 	std::cout << "PASSWORD: ";
-	coordonate(35, 10);
 
-	//str = "";
-	int i = 0;
-	ch = (char)"";
-	ch = _getch();
-	while (ch != 13||i<=5)
+	coordonate(3, 18);
+	std::cout << "The username must be at least " << m_USERNAME_MIN_DIM << " and maxim " << m_USERNAME_MAX_DIM << " characters";
+	coordonate(3, 19);
+	std::cout << "The password must be at least " << m_PASSWORD_MIN_DIM << " and maxim " << m_PASSWORD_MAX_DIM << " characters";
+
+	coordonate(10, 5); std::cout << "                    Press ESC to quit";
+	coordonate(10, 6); std::cout << "        You can't insert blank spaces in the password";
+	coordonate(7, 7); std::cout << "Press SPACE to show the password then press SPACE again to hide it";
+	coordonate(35, 12);
+
+
+	ch = new char[1];
+	while (!QUIT_NAME)
 	{
-		//if (str.size() < 10 && ch != 8)
-		if (ch != 13)
+		*ch = _getch();
+		while (*ch != 13 || STRING_DIM < m_USERNAME_MIN_DIM)
 		{
-			if (i < 10 && ch != 8)
+			if (*ch == 27)
 			{
-				//coordonate(35 + str.size(), 10);
-				coordonate(35 + i, 10);
-				std::cout << ch;
-				//str.push_back(ch);
-				user_name_[i] = ch;
-				i++;
+				QUIT_NAME = true;
+				break;
 			}
-			//else if (str.size() >= 10 && ch == 8)
-			else if (i >= 10 && ch == 8)
+			if (*ch != 13)
 			{
-				//str.pop_back();
-				i--;
-				//coordonate(35 + str.size(), 10);
-				coordonate(35 + i, 10);
-				std::cout << " ";
-				//coordonate(35 + str.size(), 10);
-				coordonate(35 + i, 10);
-			}
-			//else if (ch == 8 && i <= 10 && i != 0)
-			else if (ch == 8 && str.size() <= 10 && i != 0)
-			{
-				//str.pop_back();
-				i--;
-				//coordonate(35 + str.size(), 10);
-				coordonate(35 + i, 10);
-				std::cout << " ";
-				//coordonate(35 + str.size(), 10);
-				coordonate(35 + i, 10);
-			}
-		}
-		ch = _getch();
-	}
-	//m_user_name = str;
-	user_name_[i + 1] = (char)"\0";
-	for (int j = 0; j < i; j++)
-	{
-		m_user_name.push_back(user_name_[j]);
-	}
-	m_user_name = user_name_;
-	//strcpy_s(m_user_name, str.c_str());
-
-
-	//std::fstream database;
-	database.open("database.bin", std::ios::binary | std::ios::out | std::ios::app);
-	if (!database)
-	{
-		chenar();
-		coordonate(10, 14); std::cout << "erorr at saving user";
-		coordonate(10, 15); system("PAUSE");
-	}
-	else
-	{
-		for (int j = 0; j < i; j++)
-		{
-			database << user_name_[j];
-		}
-		database << std::endl;
-
-	}
-	database.close();
-
-
-
-	
-	coordonate(35, 11);
-	i = 0;
-	//str = "";
-	ch = (char)"";
-	ch = _getch();
-	//while (ch != 13 || str == "")
-	while (ch != 13 || i<=5)
-	{
-		//if (str.size() < 10 && ch != 8)
-		if (ch != 13)
-		{
-			//if (str.size() < 10 && ch != 8)
-			if (i < 10 && ch != 8)
-			{
-				//coordonate(35 + str.size(), 11);
-				coordonate(35 + i, 11);
-				std::cout << ch;
-				//str.push_back(ch);
-				password_[i] = ch;
-				i++;
-			}
-			//else if (str.size() >= 10 && ch == 8)
-			else if (i >= 10 && ch == 8)
-			{
-				//str.pop_back();
-				i--;
-				//coordonate(35 + str.size(), 11);
-				coordonate(35 + i, 11);
-				std::cout << " ";
-				//coordonate(35 + str.size(), 11);
-				coordonate(35 + i, 11);
-			}
-			//else if (ch == 8 && str.size() <= 10 && str.size() != 0)
-			else if (ch == 8 && i <= 10 && i != 0)
-			{
-				//str.pop_back();
-				i--;
-				//coordonate(35 + str.size(), 11);
-				coordonate(35 + i, 11);
-				std::cout << " ";
-				//coordonate(35 + str.size(), 11);
-				coordonate(35 + i, 11);
-			}
-		}
-		ch = _getch();
-	}
-	password_[i + 1] = (char)"\0";
-	for (int j = 0; j < i; j++)
-	{
-		m_password.push_back(password_[j]);
-	}
-	 //m_password= str;
-	//std::fstream database;
-	database.open("database.bin", std::ios::binary | std::ios::out | std::ios::app);
-	if (!database)
-	{
-		chenar();
-		coordonate(10, 14); std::cout << "erorr at saving user";
-		coordonate(10, 15); system("PAUSE");
-	}
-	else
-	{
-		for (int j = 0; j < i; j++)
-		{
-			database << password_[j];
-		}
-		database << std::endl;
-	}
-	database << score << std::endl;
-	database.close();
-
-}
-
-void User::check_user()
-{
-	User* u=new User();
-	std::fstream database;
-	database.open("database.bin", std::ios::binary | std::ios::in);
-	if (!database)
-	{
-		database.close();
-		chenar();
-		coordonate(10, 10);
-		SetColor(4);
-		std::cout << "Error at opening database.";
-	}
-	else
-	{
-		database.seekp(0, std::ios_base::beg);
-		//while(database.read((char*)u, sizeof(User)))
-		while(database.getline((char*)u, sizeof(User)))
-		{
-			coordonate(10, 16);
-			std::cout << u->m_user_name << " " << u->m_password;
-			coordonate(10, 17);
-			std::cout << m_user_name << " " << m_password;
-			if (u->m_user_name == m_user_name)
-			{
-				if (u->m_password == m_password)
+				if (STRING_DIM < m_USERNAME_MAX_DIM && *ch != 8)
 				{
-					acces = 1;
+					coordonate(35 + STRING_DIM, 12);
+					std::cout << *ch;
+					user_name_[STRING_DIM] = *ch;
+					STRING_DIM++;
 				}
+				else if (*ch == 8 && STRING_DIM != 0)
+				{
+					STRING_DIM--;
+					coordonate(35 + STRING_DIM, 12);
+					std::cout << " ";
+					coordonate(35 + STRING_DIM, 12);
+				}
+			}
+
+			*ch = _getch();
+		}
+		if (*ch == 13)
+		{
+			break;
+		}
+	}
+
+	//if no quit ocurred when the user wrote the username we go on reading the password
+	if (!QUIT_NAME)
+	{
+		QUIT_PASS = false;
+		int STRING_DIM_BACKUP = STRING_DIM;
+
+		for (int j = 0; j < STRING_DIM; j++)
+		{
+			m_user_name.push_back(user_name_[j]);
+		}
+
+		
+		SHOW_PASS = false;
+		coordonate(35, 13);
+		STRING_DIM = 0;
+		while (!QUIT_PASS)
+		{
+			*ch = _getch();
+			while (*ch != 13 || STRING_DIM < m_PASSWORD_MIN_DIM)
+			{
+				if (*ch == 27)
+				{
+					QUIT_PASS = true;
+					break;
+				}
+				if (*ch == 32)
+				{
+					SHOW_PASS = !SHOW_PASS;
+					coordonate(35, 13);
+					if (SHOW_PASS)
+					{
+						for (int i = 0; i < STRING_DIM; i++)
+						{
+							std::cout << password_[i];
+						}
+					}
+					else
+					{
+
+						for (int i = 0; i < STRING_DIM; i++)
+						{
+							std::cout << "*";
+						}
+					}
+				}
+				if (*ch != 13&&*ch!=32)
+				{
+					if (STRING_DIM < m_PASSWORD_MAX_DIM && *ch != 8)
+					{
+						coordonate(35 + STRING_DIM, 13);
+						if (SHOW_PASS)
+						{
+							std::cout << *ch;
+						}
+						else
+						{
+							std::cout << "*";
+						}
+						password_[STRING_DIM] = *ch;
+						STRING_DIM++;
+					}
+					else if (*ch == 8  && STRING_DIM != 0)
+					{
+						STRING_DIM--;
+						coordonate(35 + STRING_DIM, 13);
+						std::cout << " ";
+						coordonate(35 + STRING_DIM, 13);
+					}
+				}
+				*ch = _getch();
+			}
+			if (*ch == 13)
+			{
+				break;
+			}
+		}
+		//if no quit has occured we save the informations for the user
+		if (!QUIT_PASS)
+		{
+			database.close();
+			database.open("database.bin", std::ios::binary | std::ios::out | std::ios::app);
+			if (!database)
+			{
+				chenar();
+				coordonate(10, 14); std::cout << "erorr at saving user";
+				coordonate(10, 15); system("PAUSE");
 			}
 			else
 			{
-				acces = 0;
+				for (int j = 0; j < STRING_DIM_BACKUP; j++)
+				{
+					database << user_name_[j];
+				}
+				database << std::endl;
+
 			}
-			//database.getline((char*)u,sizeof(User))
-			//database.seekp(database.tellg()+1);
+			database.close();
+
+			for (int j = 0; j < STRING_DIM; j++)
+			{
+				m_password.push_back(password_[j]);
+			}
+			database.open("database.bin", std::ios::binary | std::ios::out | std::ios::app);
+			if (!database)
+			{
+				chenar();
+				coordonate(10, 14); std::cout << "erorr at saving user";
+				coordonate(10, 15); system("PAUSE");
+			}
+			else
+			{
+				for (int j = 0; j < STRING_DIM; j++)
+				{
+					database << password_[j];
+				}
+				database << std::endl;
+			}
+			database << score << std::endl;
 		}
 	}
 	database.close();
-	delete u;
+	delete ch;
+	delete user_name_;
+	delete password_;
 }
+
+
+
 
 User::~User()
 {
@@ -382,15 +441,17 @@ long long User::m_get_score()
 
 void User::m_set_user_name(char name)
 {
-	m_user_name[30] = name;
+	m_user_name = name;
 }
 
 void User::m_set_password(char pass)
 {
-	m_password[30] = pass;
+	m_password = pass;
 }
 
 void User::m_set_score(long long score)
 {
 	m_score = score;
 }
+
+

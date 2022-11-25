@@ -38,13 +38,13 @@ void inline SetColor(int color_code)
 
 void login_meniu()
 {
+    int Quit=0;
     user1 = new User();
+    user1->m_set_login_string_dimensions(6, 10, 8, 24);
     int optiune;
     while (1)
     {
-        coordonate(0, 0);  std::cout << "                                                                    ";
-        coordonate(0, 1);  std::cout << "                                                                    ";
-        coordonate(0, 2);  std::cout << "                                                                    ";
+        system("CLS");
         SetColor(3);
         for (int i = 0; i < 78; i++)
         {
@@ -112,17 +112,14 @@ void login_meniu()
         switch (optiune)
         {
         case 1:
-            //create_user();
             user1->m_register_user();
             coordonate(10, 15);
             system("PAUSE");
             break;
         case 2:
-            //user1->m_set_score(0);
-           // user1->m_get_user_name().clear();
-            //user1->m_get_password().clear();
+            Quit = user1->m_login_user();
 
-            if (user1->m_login_user())
+            if (Quit==0)
             {
                 coordonate(10, 15);
                 coordonate(0, 45); std::cout << "main";
@@ -131,6 +128,10 @@ void login_meniu()
                 highest_score = user1->m_get_score();
                 guest = 0;
                 Flappy_Bird();
+            }
+            else if (Quit == -1)
+            {
+                break;
             }
             else
             {
@@ -173,9 +174,7 @@ void Flappy_Bird()
     int ok = 1;
     while (ok)
     {
-        coordonate(0, 0);  std::cout << "                                                                    ";
-        coordonate(0, 1);  std::cout << "                                                                    ";
-        coordonate(0, 2);  std::cout << "                                                                    ";
+        system("CLS");
         SetColor(3);
         for (int i = 0; i < 78; i++)
         {
@@ -288,7 +287,9 @@ void ShowConsoleCursor(bool showFlag)
     cursorInfo.bVisible = showFlag; // set the cursor visibility
     SetConsoleCursorInfo(hConsole, &cursorInfo);
 }
-void chenar() {
+void chenar() 
+{
+    system("CLS");
     ShowConsoleCursor(false);
     SetColor(3);
     

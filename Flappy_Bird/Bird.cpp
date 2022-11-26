@@ -1,4 +1,3 @@
-#include "Bird.h"
 #include <iostream>
 #include <windows.h>
 #include "Data.h"
@@ -81,8 +80,8 @@ bool Bird::fall()
 	}
 }
 
-bool Bird::game_over(Pipe* down_pipe[], flip_pipe* up_pipe[]) {
-
+bool Bird::game_over(Pipe* down_pipe[], flip_pipe* up_pipe[]) 
+{
 	//collision with the pipe from bottom side
 	if (down_pipe[0]->m_get_x() + 5 >= m_x && m_y+1 >= down_pipe[0]->m_get_head())
 	{

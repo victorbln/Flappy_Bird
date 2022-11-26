@@ -1,10 +1,7 @@
 #ifndef USER_H
 #define USER_H
 #include <string>
-#include <fstream>
 
-#include "Functions.h"
-#include "Data.h"
 
 class User
 {private:

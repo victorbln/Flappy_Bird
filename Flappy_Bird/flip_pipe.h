@@ -1,7 +1,9 @@
-#pragma once
+#ifndef FLIP_PIPE_H
+#define FLIP_PIPE_H
 class flip_pipe
 {
-
+	const char pipe[2][8] = { '\xDB','\xDB','\xDB','\xDB','\xDB','\xDB','\xDB',//head of the pipe
+					  ' ','\xDB','\xDB','\xDB','\xDB','\xDB',' ' };//body of the pipe
 	int m_head;
 	int m_x;
 public:
@@ -14,3 +16,4 @@ public:
 
 };
 
+#endif

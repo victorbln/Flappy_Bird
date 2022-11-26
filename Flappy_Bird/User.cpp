@@ -1,5 +1,11 @@
 #include "User.h"
 #include "Data.h"
+#include <string>
+#include <fstream>
+#include <conio.h>
+
+#include "Data.h"
+#include "Functions.h"
 User::User()
 {
 	m_USERNAME_MIN_DIM = 6;

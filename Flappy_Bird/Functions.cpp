@@ -1,22 +1,22 @@
 #include "Functions.h"
 #include <iostream>
 #include <windows.h>
-#include <string.h>
-#include <string>
+#include <chrono>
 #include <conio.h>
 #include <dos.h>
 #include <stdlib.h>
 #include <string.h>
-#include <istream>
-#include <fstream>
-#include <chrono>
+
+
 #include "Data.h"
 #include "Bird.h"
 #include "flip_pipe.h"
 #include "Pipe.h"
 #include "Timer.h"
 #include "User.h"
+//creating global user for 1 instance of the game
 User* user1;
+
 void inline coordonate(int x, int y)
 {
     CursorPosition.X = x;
@@ -34,6 +34,14 @@ void inline SetColor(int color_code)
         wColor = (csbi.wAttributes & 0xF0) + (color_code & 0x0F);
         SetConsoleTextAttribute(hConsole, wColor);
     }
+}
+void ShowConsoleCursor(bool showFlag)
+{
+    CONSOLE_CURSOR_INFO     cursorInfo;
+
+    GetConsoleCursorInfo(hConsole, &cursorInfo);
+    cursorInfo.bVisible = showFlag; // set the cursor visibility
+    SetConsoleCursorInfo(hConsole, &cursorInfo);
 }
 
 void login_meniu()
@@ -261,7 +269,10 @@ void Flappy_Bird()
             
             break;
         case 3:
-            user1->save_info();
+            if (!guest)
+            {
+                user1->save_info();
+            }
             ok = 0;
             attempts = 0;
             highest_score = 0;
@@ -279,14 +290,7 @@ void Flappy_Bird()
 
 
 }
-void ShowConsoleCursor(bool showFlag)
-{
-    CONSOLE_CURSOR_INFO     cursorInfo;
 
-    GetConsoleCursorInfo(hConsole, &cursorInfo);
-    cursorInfo.bVisible = showFlag; // set the cursor visibility
-    SetConsoleCursorInfo(hConsole, &cursorInfo);
-}
 void chenar() 
 {
     system("CLS");
@@ -298,27 +302,7 @@ void chenar()
     {
         coordonate(i, 3);  std::cout << "\xDC";
     }
-    //
-    /*
-    * int height=15;
-    * int width=78;
-    * 
-    for (int i = 4;i <= width ; i++)
-    {
-        for (int j = 0; j <= height; j++)
-        {
-            if (j == 0||j==width)
-            {
-                coordonate(0 + j, i); std::cout << "\xDB";
-            }
-            else
-            {
-                coordonate(0+j, i); std::cout << " ";
-            }
 
-        }
-    }
-    */
     coordonate(0, 4);  std::cout << "\xDB                                                                            \xDB";
     coordonate(0, 5);  std::cout << "\xDB                                                                            \xDB";
     coordonate(0, 6);  std::cout << "\xDB                                                                            \xDB";

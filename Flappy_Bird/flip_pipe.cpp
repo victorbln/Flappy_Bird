@@ -2,7 +2,6 @@
 #include <cstdlib>
 #include "Functions.h"
 #include "Data.h"
-
 flip_pipe::flip_pipe(int down_pipe_head_value)//we need the down_pipe_head_value to create the up side pipe 
 //with a gap between it and the down side pipe
 {

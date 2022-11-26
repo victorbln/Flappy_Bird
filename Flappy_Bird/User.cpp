@@ -559,8 +559,7 @@ std::string User::m_get_password()
 {
 	return m_password;
 }
-
-long long User::m_get_score()
+int User::m_get_score()
 {
 	return m_score;
 }
@@ -575,7 +574,7 @@ void User::m_set_password(char pass)
 	m_password = pass;
 }
 
-void User::m_set_score(long long score)
+void User::m_set_score(int score)
 {
 	m_score = score;
 }

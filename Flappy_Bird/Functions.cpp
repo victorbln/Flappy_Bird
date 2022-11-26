@@ -478,26 +478,6 @@ void Play()
         } 
     }            
 }
-
-/*void save_score()
-{
-    /*std::ifstream input("database.txt");
-    while (input >> u >> p)
-    {
-        if (u == user_name && p == password)
-
-        {
-            acces = 1;
-            guest = 0;
-        }
-    }
-    input.close();
-
-    std::ofstream reg("scores.txt", std::ios::app);
-    reg << user_name << ' ' << score << std::endl;
-    reg.close();
-}*/
-
-            
+  
 
 

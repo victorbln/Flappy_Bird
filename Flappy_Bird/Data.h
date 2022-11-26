@@ -16,7 +16,7 @@ static double bird_time_var = 0.25;//time interval for bird
 static int move_count = 0;//pipes moves counter
 static int pipes = 0;//number of pipes
 static int gap = 6;//gap between pipes
-static long long highest_score = 0;
+static int highest_score = 0;
 static int score = 0;
 static int attempts = 0;
 

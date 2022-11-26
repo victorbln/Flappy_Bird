@@ -15,7 +15,7 @@ class User
 
 	std::string m_user_name;
 	std::string m_password;
-	long long m_score;
+	int m_score;
 
 
 public:
@@ -23,9 +23,9 @@ public:
 	~User();
 	std::string m_get_user_name();
 	std::string m_get_password();
-	long long m_get_score();
+	int m_get_score();
 
-	void m_set_score(long long score);
+	void m_set_score(int score);
 	void m_set_user_name(char name);
 	void m_set_password(char pass);
 	void m_set_login_string_dimensions(short username_min_dim,  short username_max_dim, short password_min_dim, short password_max_dim);

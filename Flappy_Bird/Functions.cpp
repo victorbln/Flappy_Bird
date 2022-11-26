@@ -254,17 +254,17 @@ void Flappy_Bird()
 
         case 1:
             Play();
-            highest_score = user1->m_get_score();
+            //highest_score = user1->m_get_score();
             break;
         case 2:
             instructions();
             
             break;
         case 3:
+            user1->save_info();
             ok = 0;
             attempts = 0;
             highest_score = 0;
-            //delete &user1;
             
             break;
         default:
@@ -461,6 +461,7 @@ void Play()
             if (highest_score < score)
             {
                 highest_score = score;
+                user1->m_set_score(score);
             }
             delete bird;
             //display game over screen

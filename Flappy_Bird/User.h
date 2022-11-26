@@ -32,6 +32,7 @@ public:
 
 	int m_login_user();
 	void m_register_user();
+	void save_info();
 
 private:
 

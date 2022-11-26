@@ -22,6 +22,8 @@ static int attempts = 0;
 
 
 static std::fstream database;
+//database.open("database.bin", std::ios::binary | std::ios::out);
+
 // static User* users[10];
 //static User *user1;
 
@@ -43,10 +45,6 @@ static CONSOLE_SCREEN_BUFFER_INFO csbi;//variable which stores the screen buffer
 static char pipe[2][8] = { '\xDB','\xDB','\xDB','\xDB','\xDB','\xDB','\xDB',//head of the pipe
                       ' ','\xDB','\xDB','\xDB','\xDB','\xDB',' ' };//body of the pipe
 
-static char bird[2][7] = { ' ',' ','(',' ','o',')','>',
-                    ' ','<','"','_','/',' ',' ' };//bird body array
-//char bird[2][7] = {  ( o)>
-  //                  <"_/   }
 
 
 

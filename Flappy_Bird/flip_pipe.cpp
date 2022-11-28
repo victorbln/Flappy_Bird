@@ -1,7 +1,9 @@
-#include "flip_pipe.h"
 #include <cstdlib>
+
+#include "flip_pipe.h"
 #include "Functions.h"
 #include "Data.h"
+
 flip_pipe::flip_pipe(int down_pipe_head_value)//we need the down_pipe_head_value to create the up side pipe 
 //with a gap between it and the down side pipe
 {
@@ -27,21 +29,21 @@ flip_pipe::flip_pipe(int down_pipe_head_value)//we need the down_pipe_head_value
 		k = 0;
 		ok = 1;
 	}
-	m_x = 68;//default position for the m_x member is 60 because there is the pipe created on the screen
+	m_x = 68;//default position for the m_x member is 68 because there is the pipe created on the screen
 
 }
 bool flip_pipe::m_move_flip_pipe()
 {
 	SetColor(10);//setting the color to green
 	m_x -= 1;//decrement the m_x member is a move to left for the pipe
-	if (m_x > 2) 
-	{	//not at the edge of the window
+
+	if (m_x > 2) //not at the edge of the window
+	{	
 		int ok = 0;
-		int j;
 		int k = 0;
 		for (int i = m_head; i >= 4; i--)
 		{
-			for (j = m_x; j <= m_x + 7; j++) 
+			for (int j = m_x; j <= m_x + 7; j++)
 			{
 				if (ok != 1) 
 				{	

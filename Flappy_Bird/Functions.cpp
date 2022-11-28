@@ -1,13 +1,12 @@
-#include "Functions.h"
 #include <iostream>
 #include <windows.h>
-#include <chrono>
 #include <conio.h>
 #include <dos.h>
 #include <stdlib.h>
 #include <string.h>
 
 
+#include "Functions.h"
 #include "Data.h"
 #include "Bird.h"
 #include "flip_pipe.h"
@@ -37,7 +36,7 @@ void inline SetColor(int color_code)
 }
 void ShowConsoleCursor(bool showFlag)
 {
-    CONSOLE_CURSOR_INFO     cursorInfo;
+    CONSOLE_CURSOR_INFO cursorInfo;
 
     GetConsoleCursorInfo(hConsole, &cursorInfo);
     cursorInfo.bVisible = showFlag; // set the cursor visibility
@@ -58,10 +57,8 @@ void login_meniu()
         {
             coordonate(i, 3);  std::cout << "\xDC";
         }
-       // coordonate(70, 3);  std::cout << "         ";
 
         coordonate(0, 4);  std::cout << "\xDB                                 Flappy Bird                                \xDB";
-       // coordonate(70, 4); std::cout << "        ";
 
         for (int i = 0; i < 78; i++)
         {
@@ -73,7 +70,6 @@ void login_meniu()
                 coordonate(i, 5); std::cout << "\xDC";
             }
         }
-        //coordonate(70, 5);  std::cout << "         ";
         coordonate(0, 6);  std::cout << "\xDB                                                                            \xDB";
         coordonate(0, 7);  std::cout << "\xDB                                                                            \xDB";
         coordonate(0, 8);  std::cout << "\xDB                                                                            \xDB";
@@ -89,8 +85,6 @@ void login_meniu()
         coordonate(0, 18); std::cout << "\xDB                                                                            \xDB";
         coordonate(0, 19); std::cout << "\xDB                                                                            \xDB";
 
-        coordonate(0, 21); std::cout << "                                                                      ";
-        coordonate(0, 22); std::cout << "                                                                      ";
         for (int i = 0; i < 78; i++)
         {
             if (i == 0 || i == 77) {
@@ -100,7 +94,6 @@ void login_meniu()
             else {
                 coordonate(i, 20); std::cout << "\xDC";
             }
-            //coordonate(70, 20); std::cout << "         ";
         }
         SetColor(15);
         coordonate(33, 10); std::cout << "1 Register ";
@@ -130,9 +123,7 @@ void login_meniu()
             if (Quit==0)
             {
                 coordonate(10, 15);
-                coordonate(0, 45); std::cout << "main";
                 user_name = user1->m_get_user_name();
-                password = user1->m_get_password();
                 highest_score = user1->m_get_score();
                 guest = 0;
                 Flappy_Bird();
@@ -173,7 +164,7 @@ void instructions()
     chenar();
     coordonate(18, 10); std::cout << "Press SPACE to make the bird jump 1 space.";
     coordonate(15, 11); std::cout << "You must make the bird pass between the 2 pipes.";
-    coordonate(7, 12); std::cout << "If the bird falls on the ground or hit the pipes the game is over.";
+    coordonate(17, 12); std::cout << "If the bird hit the pipes the game is over.";
     coordonate(24, 13); system("PAUSE");
 }
 void Flappy_Bird()
@@ -219,8 +210,6 @@ void Flappy_Bird()
         coordonate(0, 18); std::cout << "\xDB                                                                            \xDB";
         coordonate(0, 19); std::cout << "\xDB                                                                            \xDB";
 
-        coordonate(0, 21); std::cout << "                                                                              ";
-        coordonate(0, 22); std::cout << "                                                                              ";
         for (int i = 0; i < 78; i++)
         {
             if (i == 0 || i == 77) {
@@ -231,6 +220,7 @@ void Flappy_Bird()
                 coordonate(i, 20); std::cout << "\xDC";
             }
         }
+
         SetColor(15);
         if (!guest) 
         {
@@ -262,12 +252,12 @@ void Flappy_Bird()
 
         case 1:
             Play();
-            //highest_score = user1->m_get_score();
             break;
+
         case 2:
             instructions();
-            
             break;
+
         case 3:
             if (!guest)
             {
@@ -276,8 +266,8 @@ void Flappy_Bird()
             ok = 0;
             attempts = 0;
             highest_score = 0;
-            
             break;
+
         default:
             SetColor(4);
             coordonate(35, 15); std::cout << "Optiune invalida";
@@ -337,11 +327,12 @@ void Play()
 {
     chenar();//creation of edges for the window of the game in console
 
-    //display start screen and initiall conditions
+    //display start screen and initial conditions
     score = 0;
     attempts++;
     move_count = 0;
     pipes = 0;
+    //creating 2 pipes
     down_pipes[pipes] = new Pipe();
     up_pipes[pipes] = new flip_pipe(down_pipes[pipes]->m_get_head());
 
@@ -350,13 +341,13 @@ void Play()
     
 
     //creating 2 timer objects to count the time elapsed
-    Timer bird_time;
-    Timer pipe_time;
+    Timer bird_time;//for bird
+    Timer pipe_time;//for pipes
 
 
     while(!_kbhit())
     {
-         coordonate(20, 21); std::cout << "Press any key to start";
+         coordonate(20, 21); std::cout << "Press any key to start";//waiting till the player hit a key
     }
     coordonate(0, 21); std::cout << "                                                                    ";
 
@@ -368,10 +359,10 @@ void Play()
     while (1) 
     {
         SetColor(15);
-
         coordonate(9, 0); std::cout << attempts;
         coordonate(7, 1); std::cout << score;
         coordonate(16, 2); std::cout << highest_score;
+
         if (pipe_time.elapsed()>var_time)//verify the time elapsed from the last move of pipes
         {
             for (int i =0; i <=pipes; i++)
@@ -393,8 +384,8 @@ void Play()
                 }
                 if (up_pipes[i]->m_move_flip_pipe())//calling the m_move_flip_pipe method for the up side pipes
                 {
-                    //will delete the visual pipe but now we delete the objects from memmory
                     //if the pipe is at the left edge of the window the m_move_flip_pipe 
+                    //will delete the visual pipe but now we delete the objects from memmory
                     delete up_pipes[i];//erasing the object from memmory
                     
                     //shifting left the array of up side pipes
@@ -449,7 +440,6 @@ void Play()
             }
             delete bird;
             //display game over screen
-            //save_score();
             SetColor(4);
             coordonate(29, 21); std::cout << "GAME OVER";
             coordonate(20, 22); system("PAUSE");

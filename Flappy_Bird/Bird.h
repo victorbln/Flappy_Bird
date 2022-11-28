@@ -4,11 +4,10 @@
 #include "flip_pipe.h"
 class Bird
 {
-	//bird body array
 	const char bird[2][7] = { ' ',' ','(',' ','o',')','>',
 						' ','<','"','_','/',' ',' ' };
 	//char bird[2][7] = {  ( o)>
-	//                    <"_/   }
+	//bird body array     <"_/   }
 	int m_x;
 	int m_y;
 public:

@@ -1,12 +1,11 @@
 #include <iostream>
 #include <windows.h>
+#include <conio.h>
+#include <dos.h>
+#include <stdlib.h>
+
 #include "Data.h"
 #include "Functions.h"
-#include<conio.h>
-#include<dos.h>
-#include<stdlib.h>
-#include<string.h>
-#include <time.h>
 Bird::Bird()
 {
 	SetColor(6);

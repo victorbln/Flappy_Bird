@@ -6,16 +6,17 @@
 
 #include "flip_pipe.h"
 #include "Pipe.h"
-#include "User.h"
 #include "Bird.h"
 #include "Timer.h"
 #include "User.h"
+
 //game functions variables
 static double var_time = 0.15;//time interval between 2 moves of the pipes
 static double bird_time_var = 0.25;//time interval for bird 
 static int move_count = 0;//pipes moves counter
 static int pipes = 0;//number of pipes
 static int gap = 6;//gap between pipes
+
 static int highest_score = 0;
 static int score = 0;
 static int attempts = 0;
@@ -23,7 +24,6 @@ static int attempts = 0;
 //login used variables
 static std::fstream database;
 static std::string user_name="";
-static std::string password="";
 static int guest = 1;
 static bool acces = false;
 

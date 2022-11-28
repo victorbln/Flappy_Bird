@@ -1,9 +1,8 @@
-#include "User.h"
-#include "Data.h"
 #include <string>
 #include <fstream>
 #include <conio.h>
 
+#include "User.h"
 #include "Data.h"
 #include "Functions.h"
 User::User()
@@ -105,6 +104,7 @@ int User::m_login_user()
 		{
 			this->m_user_name.push_back(user_name_[j]);
 		}
+
 		coordonate(35, 13);
 		PASSWORD_DIM = 0;
 		
@@ -119,14 +119,15 @@ int User::m_login_user()
 				break;
 			}
 			
-			while (*ch != 13 || PASSWORD_DIM < m_PASSWORD_MIN_DIM)
+			while (*ch != 13 || PASSWORD_DIM < m_PASSWORD_MIN_DIM)//!=ENTER
 			{
-				if (*ch == 27)
+				if (*ch == 27)//*ch==ESC
 				{
 					QUIT_PASS = true;
 					break;
 				}
-				if (*ch == 32)
+
+				if (*ch == 32)//*ch==SPACE
 				{
 					SHOW_PASS = !SHOW_PASS;
 					coordonate(35, 13);
@@ -146,6 +147,7 @@ int User::m_login_user()
 						}
 					}
 				}
+
 				if (*ch != 13&&*ch!=32)
 				{
 					if (PASSWORD_DIM < m_PASSWORD_MAX_DIM && *ch != 8)
@@ -223,8 +225,8 @@ int User::m_login_user()
 				}
 			}
 		}
-
 	}
+
 	database.close();
 	delete u;
 	delete ch;
@@ -471,10 +473,12 @@ void User::m_register_user()
 			}
 			database.close();
 
+
 			for (int j = 0; j < PASSWORD_DIM; j++)
 			{
 				m_password.push_back(password_[j]);
 			}
+
 			database.open("database.bin", std::ios::binary | std::ios::out | std::ios::app);
 			if (!database)
 			{
@@ -490,6 +494,7 @@ void User::m_register_user()
 				}
 				database << std::endl;
 			}
+
 			database << score << std::endl;
 		}
 	}
@@ -504,6 +509,7 @@ void User::save_info()
 {
 	std::string str;
 	User* u = new User;
+
 	database.close();
 	database.open("database.bin", std::ios::binary | std::ios::in | std::ios::out);
 	if (!database)

@@ -1,21 +1,8 @@
 #pragma once
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
-#include "Functions.h"
 #include <iostream>
-#include <windows.h>
-#include "Data.h"
-#include "Bird.h"
-#include <thread>
-#include <vector>
-#include "flip_pipe.h"
-#include<conio.h>
-#include<dos.h>
-#include <chrono>
-#include<stdlib.h>
-#include<string.h>
-#include "Pipe.h"
-#include "Timer.h"
+
 
 
 void coordonate(int x, int y);//function that sets the cursor of the console at some specified coordinates

@@ -11,6 +11,7 @@ User::User()
 	m_USERNAME_MAX_DIM = 20;
 	m_PASSWORD_MIN_DIM = 8;
 	m_PASSWORD_MAX_DIM = 24;
+	m_score = 0;
 }
 void User::m_set_login_string_dimensions(short username_min_dim, short username_max_dim, short password_min_dim, short password_max_dim)
 {
@@ -229,9 +230,9 @@ int User::m_login_user()
 
 	database.close();
 	delete u;
-	delete ch;
-	delete user_name_;
-	delete password_;
+	delete[] ch;
+	delete[] user_name_;
+	delete[] password_;
 	return -1;
 }
 
@@ -263,7 +264,7 @@ void User::m_register_user()
 		//these lines are used to display a screen for registration
 		m_user_name.clear();
 		m_password.clear();
-		delete user_name_;
+		delete[] user_name_;
 		user_name_ = new char[m_USERNAME_MAX_DIM];
 		chenar();
 		ShowConsoleCursor(1);
@@ -499,9 +500,9 @@ void User::m_register_user()
 		}
 	}
 	database.close();
-	delete ch;
-	delete user_name_;
-	delete password_;
+	delete[] ch;
+	delete[] user_name_;
+	delete[] password_;
 	delete u;
 }
 
@@ -538,7 +539,7 @@ void User::save_info()
 			database >> str;
 			
 			
-			int size = str.size();
+			int size =(int)str.size();
 			if (!(u->m_user_name.compare(this->m_user_name)))//when we find the user data location we update the score
 			{
 				database.seekp(-size, std::ios::cur);

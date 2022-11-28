@@ -77,6 +77,7 @@ bool Bird::fall()
 		coordonate(10, m_y - 1); std::cout << "        ";
 		return false;
 	}
+	return true;
 }
 
 bool Bird::game_over(Pipe* down_pipe[], flip_pipe* up_pipe[]) 

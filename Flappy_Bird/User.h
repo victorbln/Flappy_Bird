@@ -13,9 +13,9 @@ class User : public console_handling
 	short m_PASSWORD_MIN_DIM;
 	short m_PASSWORD_MAX_DIM;
 
+	int m_score;
 	std::string m_user_name;
 	std::string m_password;
-	int m_score;
 	std::fstream database;
 
 

@@ -1,10 +1,6 @@
 #ifndef BIRD_H
 #define BIRD_H
 #include <iostream>
-#include <windows.h>
-#include <conio.h>
-#include <dos.h>
-#include <stdlib.h>
 
 #include "flip_pipe.h"
 #include "Pipe.h"
@@ -23,7 +19,7 @@ public:
 
 	Bird();
 	~Bird();
-	void move_bird(char ch);
+	int move_bird(char ch);
 	bool game_over(Pipe* down_pipe[], flip_pipe* up_pipe[]);
 	bool fall();
 

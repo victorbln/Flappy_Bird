@@ -1,6 +1,5 @@
 #ifndef FLIP_PIPE_H
 #define FLIP_PIPE_H
-#include <cstdlib>
 #include "console_handling.h"
 class flip_pipe : public console_handling
 {

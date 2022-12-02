@@ -1,9 +1,6 @@
 #include "Flappy_bird.h"
 
-
-
-
-void functions::login_meniu()
+void flappy_bird::login_meniu()
 {
     int Quit=0;
     user1 = new User();
@@ -118,7 +115,7 @@ void functions::login_meniu()
         }
     }
 }
-void functions::instructions()
+void flappy_bird::instructions()
 {
     chenar();
     coordonate(18, 10); std::cout << "Press SPACE to make the bird jump 1 space.";
@@ -126,7 +123,7 @@ void functions::instructions()
     coordonate(17, 12); std::cout << "If the bird hit the pipes the game is over.";
     coordonate(24, 13); system("PAUSE");
 }
-void functions::Flappy_Bird()
+void flappy_bird::Flappy_Bird()
 {
     int optiune;
     int ok = 1;
@@ -239,10 +236,10 @@ void functions::Flappy_Bird()
 
 
 }  
-void functions::Play() 
+void flappy_bird::Play()
 {
     chenar();//creation of edges for the window of the game in console
-
+    int QUIT_GAME = 0;
     //display start screen and initial conditions
     score = 0;
     attempts++;
@@ -270,7 +267,10 @@ void functions::Play()
     coordonate(0, 0); std::cout << "Attempt: ";
     coordonate(0, 1); std::cout << "Score: ";
     coordonate(0, 2); std::cout << "Highest score : ";
-
+    coordonate(60, 0); std::cout << "Press ESC to quit";
+    coordonate(60, 1); std::cout << "Press TAB to pause";
+    coordonate(60, 2); std::cout << "Press SPACE to jump";
+   // coordonate()
 
     while (1) 
     {
@@ -294,7 +294,7 @@ void functions::Play()
                     {
                         down_pipes[i] = down_pipes[i + 1];
                     }
-                    score++;
+                   
 
                     
                 }
@@ -311,6 +311,7 @@ void functions::Play()
                     }
                     pipes--;//decrement the pipes count variable
                     i--;
+                    score++;
                 }
                
             }
@@ -332,8 +333,45 @@ void functions::Play()
         ///space key hit
         if (_kbhit()) 
         {
-             bird->move_bird(_getch());
-             bird_time.reset();
+            QUIT_GAME = bird->move_bird(_getch());
+            if (QUIT_GAME==1)
+            {
+                //QUIT
+                for (int i = 0; i < pipes; i++)
+                {
+                    delete down_pipes[i];
+                    delete up_pipes[i];
+                    down_pipes[i] = nullptr;
+                    up_pipes[i] = nullptr;
+                }
+
+                //update high score
+                if (highest_score < score)
+                {
+                    highest_score = score;
+                    user1->m_set_score(score);
+                }
+                delete bird;
+                //display game over screen
+                SetColor(4);
+                coordonate(29, 21); std::cout << "QUIT GAME";
+                coordonate(20, 22); system("PAUSE");
+                break;
+            }
+            else if (QUIT_GAME == 0)
+            {
+                //JUST JUMP
+                bird_time.reset();
+            }
+            else if (QUIT_GAME == 2)
+            {
+                //PAUSE
+                coordonate(29, 21); std::cout << "PAUSE";
+                coordonate(20, 22); std::cout << "Press any key to restart";
+                _getch();
+                coordonate(29, 21); std::cout << "                                  ";
+                coordonate(20, 22); std::cout << "                                  ";
+            }
         }
 
         ///bird collided with the pipes

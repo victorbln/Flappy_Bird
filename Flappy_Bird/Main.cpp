@@ -5,8 +5,10 @@
 
 int main() 
 {
-	functions f;
 	SetConsoleTitle(L"Flappy Bird");
-	f.login_meniu();
+
+	flappy_bird *f=new flappy_bird;
+	f->login_meniu();
+
 	return 0;
 }

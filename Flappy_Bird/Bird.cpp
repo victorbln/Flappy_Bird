@@ -14,7 +14,7 @@ Bird::Bird()
 }
 
 
-void Bird::move_bird(char ch) 
+int Bird::move_bird(char ch) 
 {
 	ShowConsoleCursor(false);
 	SetColor(6);
@@ -28,9 +28,9 @@ void Bird::move_bird(char ch)
 			m_y -= 1;
 
 			//printing the bird with the updated position
-			for (int i = 0; i < 2; i++) 
+			for (int i = 0; i < 2; i++)
 			{
-				for (int j = 0; j < 7; j++) 
+				for (int j = 0; j < 7; j++)
 				{
 					coordonate(m_x + j, m_y + i);
 					std::cout << bird[i][j];
@@ -38,11 +38,23 @@ void Bird::move_bird(char ch)
 			}
 
 			//erasing the row bellow the bird
-			coordonate(10, m_y+2); std::cout << "       ";
+			coordonate(10, m_y + 2); std::cout << "       ";
 			SetColor(15);
 		}
+		return 0;
 	}
-
+	else if (ch == 27)
+	{
+		return 1;
+	}
+	else if (ch == 9)
+	{
+		return 2;
+	}
+	else 
+	{ 
+		return -1;
+	};
 }
 
 bool Bird::fall() 

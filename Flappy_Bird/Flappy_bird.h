@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-class functions : public console_handling
+class flappy_bird : public console_handling
 {
 	Pipe* down_pipes[5];//array of pointer to objects of type down_pipe
 	flip_pipe* up_pipes[5];//array of pointer to objects of type up_pipe

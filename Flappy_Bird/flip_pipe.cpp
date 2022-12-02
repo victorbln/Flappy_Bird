@@ -30,9 +30,6 @@ flip_pipe::flip_pipe(int down_pipe_head_value)//we need the down_pipe_head_value
 	m_x = 68;//default position for the m_x member is 68 because there is the pipe created on the screen
 
 }
-flip_pipe::flip_pipe()
-{
-}
 bool flip_pipe::m_move_flip_pipe()
 {
 	SetColor(10);//setting the color to green

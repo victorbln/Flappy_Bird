@@ -1,15 +1,15 @@
 #ifndef BIRD_H
 #define BIRD_H
-#include "flip_pipe.h"
 #include <iostream>
 #include <windows.h>
 #include <conio.h>
 #include <dos.h>
 #include <stdlib.h>
 
+#include "flip_pipe.h"
 #include "Pipe.h"
 #include "console_handling.h"
-#include "Flappy_bird.h"
+
 
 class Bird : public console_handling
 {

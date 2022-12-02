@@ -367,7 +367,7 @@ void flappy_bird::Play()
             {
                 //PAUSE
                 coordonate(29, 21); std::cout << "PAUSE";
-                coordonate(20, 22); std::cout << "Press any key to restart";
+                coordonate(20, 22); std::cout << "Press any key to continue";
                 _getch();
                 coordonate(29, 21); std::cout << "                                  ";
                 coordonate(20, 22); std::cout << "                                  ";

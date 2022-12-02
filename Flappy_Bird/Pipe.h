@@ -1,5 +1,10 @@
-#pragma once
-class Pipe
+#ifndef PIPE_H
+#define PIPE_H
+
+#include <cstdlib>
+#include "console_handling.h"
+
+class Pipe : public console_handling
 {
 	const char pipe[2][8] = { '\xDB','\xDB','\xDB','\xDB','\xDB','\xDB','\xDB',//head of the pipe
 					  ' ','\xDB','\xDB','\xDB','\xDB','\xDB',' ' };//body of the pipe
@@ -17,3 +22,5 @@ public:
 	int m_get_x();
 	bool m_move_down_pipe();
 };
+
+#endif

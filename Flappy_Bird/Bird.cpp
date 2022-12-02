@@ -1,11 +1,4 @@
-#include <iostream>
-#include <windows.h>
-#include <conio.h>
-#include <dos.h>
-#include <stdlib.h>
-
-#include "Data.h"
-#include "Functions.h"
+#include "Bird.h"
 Bird::Bird()
 {
 	SetColor(6);

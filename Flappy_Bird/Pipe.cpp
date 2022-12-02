@@ -1,7 +1,6 @@
 #include "Pipe.h"
-#include <cstdlib>
-#include "Functions.h"
-#include "Data.h"
+
+
 Pipe::Pipe()
 {
 	int ok = 0;

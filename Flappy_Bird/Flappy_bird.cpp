@@ -1,49 +1,9 @@
-#include <iostream>
-#include <windows.h>
-#include <conio.h>
-#include <dos.h>
-#include <stdlib.h>
-#include <string.h>
+#include "Flappy_bird.h"
 
 
-#include "Functions.h"
-#include "Data.h"
-#include "Bird.h"
-#include "flip_pipe.h"
-#include "Pipe.h"
-#include "Timer.h"
-#include "User.h"
-//creating global user for 1 instance of the game
-User* user1;
 
-void inline coordonate(int x, int y)
-{
-    CursorPosition.X = x;
-    CursorPosition.Y = y;
-    SetConsoleCursorPosition(hConsole, CursorPosition);
-}
-void inline SetColor(int color_code)
-{
-    WORD wColor;
 
-    //We use csbi for the wAttributes word.
-    if (GetConsoleScreenBufferInfo(hConsole, &csbi))
-    {
-        //Mask out all but the background attribute, and add in the foreground color
-        wColor = (csbi.wAttributes & 0xF0) + (color_code & 0x0F);
-        SetConsoleTextAttribute(hConsole, wColor);
-    }
-}
-void ShowConsoleCursor(bool showFlag)
-{
-    CONSOLE_CURSOR_INFO cursorInfo;
-
-    GetConsoleCursorInfo(hConsole, &cursorInfo);
-    cursorInfo.bVisible = showFlag; // set the cursor visibility
-    SetConsoleCursorInfo(hConsole, &cursorInfo);
-}
-
-void login_meniu()
+void functions::login_meniu()
 {
     int Quit=0;
     user1 = new User();
@@ -158,8 +118,7 @@ void login_meniu()
         }
     }
 }
-
-void instructions()
+void functions::instructions()
 {
     chenar();
     coordonate(18, 10); std::cout << "Press SPACE to make the bird jump 1 space.";
@@ -167,7 +126,7 @@ void instructions()
     coordonate(17, 12); std::cout << "If the bird hit the pipes the game is over.";
     coordonate(24, 13); system("PAUSE");
 }
-void Flappy_Bird()
+void functions::Flappy_Bird()
 {
     int optiune;
     int ok = 1;
@@ -279,51 +238,8 @@ void Flappy_Bird()
 
 
 
-}
-
-void chenar() 
-{
-    system("CLS");
-    ShowConsoleCursor(false);
-    SetColor(3);
-    
-    //top side of the window
-    for (int i = 0; i < 78; i++)
-    {
-        coordonate(i, 3);  std::cout << "\xDC";
-    }
-
-    coordonate(0, 4);  std::cout << "\xDB                                                                            \xDB";
-    coordonate(0, 5);  std::cout << "\xDB                                                                            \xDB";
-    coordonate(0, 6);  std::cout << "\xDB                                                                            \xDB";
-    coordonate(0, 7);  std::cout << "\xDB                                                                            \xDB";
-    coordonate(0, 8);  std::cout << "\xDB                                                                            \xDB";
-    coordonate(0, 9);  std::cout << "\xDB                                                                            \xDB";
-    coordonate(0, 10); std::cout << "\xDB                                                                            \xDB";
-    coordonate(0, 11); std::cout << "\xDB                                                                            \xDB";
-    coordonate(0, 12); std::cout << "\xDB                                                                            \xDB";
-    coordonate(0, 13); std::cout << "\xDB                                                                            \xDB";
-    coordonate(0, 14); std::cout << "\xDB                                                                            \xDB";
-    coordonate(0, 15); std::cout << "\xDB                                                                            \xDB";
-    coordonate(0, 16); std::cout << "\xDB                                                                            \xDB";
-    coordonate(0, 17); std::cout << "\xDB                                                                            \xDB";
-    coordonate(0, 18); std::cout << "\xDB                                                                            \xDB";
-    coordonate(0, 19); std::cout << "\xDB                                                                            \xDB";
-    
-    //bottom side of the window
-    for (int i = 0; i < 78; i++)
-    {
-        if (i == 0 || i == 77) {
-
-            coordonate(i, 20); std::cout << "\xDB";
-        }
-        else {
-            coordonate(i, 20); std::cout << "\xDC";
-        }
-    }
-}
-    
-void Play() 
+}  
+void functions::Play() 
 {
     chenar();//creation of edges for the window of the game in console
 

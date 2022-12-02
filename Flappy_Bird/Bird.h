@@ -1,8 +1,17 @@
 #ifndef BIRD_H
 #define BIRD_H
-#include "Pipe.h"
 #include "flip_pipe.h"
-class Bird
+#include <iostream>
+#include <windows.h>
+#include <conio.h>
+#include <dos.h>
+#include <stdlib.h>
+
+#include "Pipe.h"
+#include "console_handling.h"
+#include "Flappy_bird.h"
+
+class Bird : public console_handling
 {
 	const char bird[2][7] = { ' ',' ','(',' ','o',')','>',
 						' ','<','"','_','/',' ',' ' };

@@ -1,9 +1,12 @@
 #ifndef USER_H
 #define USER_H
 #include <string>
+#include <fstream>
+#include <conio.h>
 
+#include "console_handling.h"
 
-class User
+class User : public console_handling
 {private:
 	short m_USERNAME_MAX_DIM;
 	short m_USERNAME_MIN_DIM;
@@ -13,6 +16,8 @@ class User
 	std::string m_user_name;
 	std::string m_password;
 	int m_score;
+	std::fstream database;
+
 
 
 public:

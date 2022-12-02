@@ -1,11 +1,12 @@
 #include <iostream>
 #include <windows.h>
-#include "Functions.h"
+#include "Flappy_bird.h"
 
 
 int main() 
 {
+	functions f;
 	SetConsoleTitle(L"Flappy Bird");
-	login_meniu();
+	f.login_meniu();
 	return 0;
 }

@@ -1,10 +1,5 @@
-#include <string>
-#include <fstream>
-#include <conio.h>
-
 #include "User.h"
-#include "Data.h"
-#include "Functions.h"
+
 User::User()
 {
 	m_USERNAME_MIN_DIM = 6;
@@ -496,7 +491,7 @@ void User::m_register_user()
 				database << std::endl;
 			}
 
-			database << score << std::endl;
+			database << this->m_score << std::endl;
 		}
 	}
 	database.close();

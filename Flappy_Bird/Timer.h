@@ -1,6 +1,5 @@
 #ifndef _TIMER
 #define _TIMER
-#include <iostream>
 #include <chrono>
 
 class Timer

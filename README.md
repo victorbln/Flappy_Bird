@@ -2,6 +2,8 @@
 Hello! My name is Victor and this is my first project uploaded on github.
 It's not much because this is my first project in c++, one in which i learned a lot
 but i tried to make it a full functional application even if it is just a flappy bird in console.
+I uploaded a .exe file if you want to try the "game"...the browser and even the windows defender may say that it is insecure
+but that only because its a poor app writen in c++.
 
 The customization of the console like colorized characters and a few other things are implemented
 in the console_handling class. This class is inherited by my other classes that need to display 

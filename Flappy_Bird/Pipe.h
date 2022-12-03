@@ -18,9 +18,9 @@ class Pipe : public console_handling
 public:
 	Pipe();
 	~Pipe();
-	int m_get_head();
-	int m_get_x();
-	bool m_move_down_pipe();
+	int m_get_head();//returns the y coordinate of the head of the pipe
+	int m_get_x();//returns the x coordinate of the pipe
+	bool m_move_down_pipe();//method that moves the pipe 1 space
 };
 
 #endif

@@ -282,38 +282,25 @@ void flappy_bird::Play()
         if (pipe_time.elapsed()>var_time)//verify the time elapsed from the last move of pipes
         {
             for (int i =0; i <=pipes; i++)
-            {
-                if (down_pipes[i]->m_move_down_pipe())//calling the m_move_down_pipe method for the down pipes
+            { 
+                // calling the m_move_down_pipe and m_move_flip_pipe methods to move the pipes
+                if (down_pipes[i]->m_move_down_pipe() || up_pipes[i]->m_move_flip_pipe())
                 {
-                    //if the pipe is at the left edge of the window the m_move_down_pipe 
-                    //will delete the visual pipe but now we delete the objects from memmory
+                    up_pipes[i]->m_move_flip_pipe();//we call this method once more because if the down pipes is at the edge..it returns 1 and the call from the if statement wont operate
+                    //if the pipes are at the left edge of the window the methods
+                    //will delete the visual pipes but now we delete the objects from memmory
                     delete down_pipes[i];
-
-                    //shifting left the array of down side pipes
-                    for (int i = 0; i <= pipes; i++)
+                    delete up_pipes[i];
+                    //shifting left the arrays of pipes
+                    for (int j = 0; j <= pipes; j++)
                     {
-                        down_pipes[i] = down_pipes[i + 1];
-                    }
-                   
-
-                    
-                }
-                if (up_pipes[i]->m_move_flip_pipe())//calling the m_move_flip_pipe method for the up side pipes
-                {
-                    //if the pipe is at the left edge of the window the m_move_flip_pipe 
-                    //will delete the visual pipe but now we delete the objects from memmory
-                    delete up_pipes[i];//erasing the object from memmory
-                    
-                    //shifting left the array of up side pipes
-                    for (int i = 0; i <= pipes; i++)
-                    {
-                        up_pipes[i] = up_pipes[i + 1];
+                        down_pipes[j] = down_pipes[j + 1];
+                        up_pipes[j] = up_pipes[j + 1];
                     }
                     pipes--;//decrement the pipes count variable
                     i--;
                     score++;
                 }
-               
             }
             move_count++;//counting the moves of the pipes on the screen
             pipe_time.reset();//reset the pipe time because we moved them

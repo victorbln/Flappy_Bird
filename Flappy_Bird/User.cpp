@@ -7,6 +7,8 @@ User::User()
 	m_PASSWORD_MIN_DIM = 8;
 	m_PASSWORD_MAX_DIM = 24;
 	m_score = 0;
+	database.open("database.bin", std::ios::binary | std::ios::out);
+	database.close();
 }
 void User::m_set_login_string_dimensions(short username_min_dim, short username_max_dim, short password_min_dim, short password_max_dim)
 {
